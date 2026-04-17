@@ -1,0 +1,12 @@
+discord.py[voice]
+Pillow
+psutil
+requests
+cryptography
+pyautogui
+pynput
+opencv-python-headless
+numpy
+sounddevice
+scapy
+colorama
