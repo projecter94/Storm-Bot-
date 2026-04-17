@@ -124,7 +124,6 @@ intents.message_content = True
 # Love y’all. Bye.  
 # ~~~ H-zz-H ~~~  
 
-HzzH = "MTQ5MzMyMjMyMTgxMTczNDU3OA.Gv_wZm.y-pxFA5oyIOJ-A9XpLWSYyL8EJT5rzpzjNHyTM" # Put ur bot token here
 bot = commands.Bot(command_prefix="!", intents=intents, help_command=None) # Change the "!" to whatever prefix you want
 
 # DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
