@@ -1,0 +1,9 @@
+discord.py[voice]
+Pillow
+opencv-python
+numpy
+pynput
+psutil
+requests
+cryptography
+pywin32
