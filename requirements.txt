@@ -11,4 +11,3 @@ sounddevice
 scapy
 colorama
 pyaes
-pywin32
