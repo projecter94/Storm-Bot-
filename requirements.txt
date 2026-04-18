@@ -1,0 +1,14 @@
+discord.py
+flask
+Pillow
+psutil
+requests
+pyautogui
+pynput
+opencv-python-headless
+numpy
+sounddevice
+scapy
+colorama
+pyaes
+pywin32
