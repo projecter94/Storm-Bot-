@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: hzzh-c2
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "python storm.py"
-    envVars:
-      - key: DISCORD_TOKEN
-        sync: false
